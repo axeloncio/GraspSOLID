@@ -36,8 +36,8 @@ namespace Full_GRASP_And_SOLID.Library
                     $"usando '{step.Equipment.Description}' durante {step.Time}");
             }
 
-            CostCalc costCalc = new CostCalc();
-            double TotalCost = costCalc.CalcCost(this);
+            RecipeCostCalculator costCalc = new RecipeCostCalculator();
+            double TotalCost = costCalc.CalculateProductionCost(this);
             Console.WriteLine($"Costo total: {TotalCost}");
         }
     }

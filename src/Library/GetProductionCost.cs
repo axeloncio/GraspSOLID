@@ -1,27 +1,42 @@
 using Full_GRASP_And_SOLID.Library;
 /* Esta clase está basada en el principio S de SOLID (SRP: Responsabilidad única), creamos una clase
 que vamos a utilizar únicamente para calcular el costo de la producción de la receta. */
-namespace Full_GRASP_And_SOLID{
-    public class CostCalc{
-        public double CalcCost(Recipe recipe){
-            double IngredientCost = CalcIngredientCost(recipe);
-            double EquipmentCost = CalcEquipmentCost(recipe);
+namespace Full_GRASP_And_SOLID
+{
+    public class RecipeCostCalculator
+    {
+        public double CalculateProductionCost(Recipe recipe)
+        {
+            double ingredientCost = CalculateIngredientCost(recipe);
+            double equipmentCost = CalculateEquipmentCost(recipe);
 
-            return IngredientCost + EquipmentCost;
+            return ingredientCost + equipmentCost;
         }
-        private double CalcIngredientCost(Recipe recipe){
-            double IngredientCost = 0;
-            foreach(Step step in recipe.Steps){
-                IngredientCost += step.Input.UnitCost * step.Quantity;
+
+        private double CalculateIngredientCost(Recipe recipe)
+        {
+            double totalIngredientCost = 0;
+
+            foreach (Step step in recipe.Steps)
+            {
+                double stepIngredientCost = step.Input.UnitCost * step.Quantity;
+                totalIngredientCost += stepIngredientCost;
             }
-            return IngredientCost;
+
+            return totalIngredientCost;
         }
-        private double CalcEquipmentCost(Recipe recipe){
-            double EquipmentCost = 0;
-            foreach(Step step in recipe.Steps){
-                EquipmentCost += (step.Time / 60.0) * step.Equipment.HourlyCost;
+
+        private double CalculateEquipmentCost(Recipe recipe)
+        {
+            double totalEquipmentCost = 0;
+
+            foreach (Step step in recipe.Steps)
+            {
+                double stepEquipmentCost = (step.Time / 60.0) * step.Equipment.HourlyCost;
+                totalEquipmentCost += stepEquipmentCost;
             }
-            return EquipmentCost;
+
+            return totalEquipmentCost;
         }
     }
-}
+}   
